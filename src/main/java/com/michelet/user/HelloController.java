@@ -1,4 +1,4 @@
-package com.michelet.user_service;
+package com.michelet.user;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
