@@ -38,6 +38,8 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
 	implementation 'com.github.Miche-Let:common:dev-SNAPSHOT'
+
+	testImplementation 'com.h2database:h2'
 }
 
 dependencyManagement {
