@@ -3,10 +3,6 @@ package com.michelet.user.domain.model;
 import com.michelet.user.domain.enums.UserRole;
 import com.michelet.user.domain.enums.UserStatus;
 import com.michelet.user.domain.vo.*;
-import com.michelet.user.domain.vo.LoginId;
-import com.michelet.user.domain.vo.Password;
-import com.michelet.user.domain.vo.Phone;
-import com.michelet.user.domain.vo.UserId;
 
 import java.time.LocalDateTime;
 
