@@ -15,7 +15,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean existsByLoginIdOrEmailOrPhone(String loginId,String email, String phone) {
-        return jpaRepository.existsByEmailOrPhone(loginId, email, phone);
+        return jpaRepository.existsByLoginIdOrEmailOrPhone(loginId, email, phone);
     }
 
     @Override
