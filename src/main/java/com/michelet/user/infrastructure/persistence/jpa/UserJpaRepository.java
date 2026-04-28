@@ -1,9 +1,8 @@
 package com.michelet.user.infrastructure.persistence.jpa;
 
+import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.UUID;
-
 public interface UserJpaRepository extends JpaRepository<UserJpaEntity, UUID> {
-    boolean existsByEmailOrPhone(String email, String phone);
+    boolean existsByEmailOrPhone(String loginId, String email, String phone);
 }

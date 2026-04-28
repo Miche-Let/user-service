@@ -1,7 +1,7 @@
 package com.michelet.user.application.service;
 
-import com.michelet.user.application.dto.result.UserResult;
 import com.michelet.user.application.dto.command.SignUpCommand;
+import com.michelet.user.application.dto.result.UserResult;
 import com.michelet.user.domain.exception.UserErrorCode;
 import com.michelet.user.domain.exception.UserException;
 import com.michelet.user.domain.model.User;
@@ -21,7 +21,7 @@ public class UserCommandService {
 
     @Transactional
     public UserResult signUp(SignUpCommand command){
-        if(userRepository.existsByEmailOrPhone(command.email(), command.phone())){
+        if(userRepository.existsByLoginIdOrEmailOrPhone(command.loginId(),command.email(), command.phone())){
             throw new UserException(UserErrorCode.DUPLICATE_USER);
         }
 
