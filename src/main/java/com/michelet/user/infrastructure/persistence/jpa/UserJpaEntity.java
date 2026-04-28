@@ -17,7 +17,6 @@ import java.util.UUID;
 @Table(name = "p_users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class UserJpaEntity extends BaseEntity {
     @Id
     @Column(nullable = false, updatable = false)
