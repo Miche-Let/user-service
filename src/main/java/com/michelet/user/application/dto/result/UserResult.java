@@ -20,9 +20,9 @@ public record UserResult(
         return new UserResult(
                 user.getId().value(),
                 user.getLoginId().value(),
-                user.getPassword().value(),
                 user.getName(),
                 user.getEmail().value(),
+                user.getPhone().value(),
                 user.getRole(),
                 user.getStatus(),
                 user.getLastLoginAt()
