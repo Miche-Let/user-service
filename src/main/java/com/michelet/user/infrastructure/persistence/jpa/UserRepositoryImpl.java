@@ -1,8 +1,11 @@
 package com.michelet.user.infrastructure.persistence.jpa;
 
+import com.michelet.user.domain.exception.UserErrorCode;
+import com.michelet.user.domain.exception.UserException;
 import com.michelet.user.domain.model.User;
 import com.michelet.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,7 +20,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User user) {
-        UserJpaEntity savedEntity = jpaRepository.save(UserMapper.toJpaEntity(user));
-        return UserMapper.toDomainEntity(savedEntity);
+        try {
+            UserJpaEntity savedEntity = jpaRepository.save(UserMapper.toJpaEntity(user));
+            return UserMapper.toDomainEntity(savedEntity);
+        } catch (DataIntegrityViolationException e) {
+            throw new UserException(UserErrorCode.DUPLICATE_USER);
+        }
     }
 }
