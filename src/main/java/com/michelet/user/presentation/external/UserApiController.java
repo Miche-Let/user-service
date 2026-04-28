@@ -5,6 +5,7 @@ import com.michelet.user.application.service.UserCommandService;
 import com.michelet.user.presentation.UserSuccessCode;
 import com.michelet.user.presentation.dto.request.SignUpRequest;
 import com.michelet.user.presentation.dto.response.UserResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserApiController {
     private final UserCommandService userCommandService;
 
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<UserResponse>> signUp(@RequestBody SignUpRequest request){
+    public ResponseEntity<ApiResponse<UserResponse>> signUp(@Valid @RequestBody SignUpRequest request){
         UserResponse response = UserResponse.from(userCommandService.signUp(request.toCommand()));
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.ok(UserSuccessCode.USER_CREATED, response));
     }
