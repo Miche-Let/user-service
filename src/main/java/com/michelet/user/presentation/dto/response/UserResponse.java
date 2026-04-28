@@ -1,14 +1,12 @@
 package com.michelet.user.presentation.dto.response;
 
 import com.michelet.user.application.dto.result.UserResult;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record UserResponse(
         UUID userId,
         String loginId,
-        String password,
         String name,
         String email,
         String phone,
@@ -20,7 +18,6 @@ public record UserResponse(
         return new UserResponse(
                 result.id(),
                 result.loginId(),
-                result.password(),
                 result.name(),
                 result.email(),
                 result.phone(),
