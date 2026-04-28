@@ -3,8 +3,10 @@ package com.michelet.user.infrastructure.persistence.jpa;
 import com.michelet.common.entity.BaseEntity;
 import com.michelet.user.domain.enums.UserRole;
 import com.michelet.user.domain.enums.UserStatus;
+import com.michelet.user.domain.model.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +17,7 @@ import java.util.UUID;
 @Table(name = "p_users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class UserJpaEntity extends BaseEntity {
     @Id
     @Column(nullable = false, updatable = false)
@@ -29,11 +32,11 @@ public class UserJpaEntity extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, unique = true, length = 20)
-    private String phone;
-
     @Column(nullable = false, unique = true, length = 100)
     private String email;
+
+    @Column(nullable = false, unique = true, length = 20)
+    private String phone;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -46,4 +49,17 @@ public class UserJpaEntity extends BaseEntity {
     @Column
     private LocalDateTime lastLoginAt;
 
+    public static UserJpaEntity from(User user){
+        return new UserJpaEntity(
+                user.getId().value(),
+                user.getLoginId().value(),
+                user.getPassword().value(),
+                user.getName(),
+                user.getEmail().value(),
+                user.getPhone().value(),
+                user.getRole(),
+                user.getStatus(),
+                user.getLastLoginAt()
+        );
+    }
 }
