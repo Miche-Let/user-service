@@ -11,6 +11,7 @@ import com.michelet.user.domain.vo.LoginId;
 import com.michelet.user.domain.vo.Password;
 import com.michelet.user.domain.vo.Phone;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,16 +19,17 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserCommandService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public UserResult signUp(SignUpCommand command){
         if(userRepository.existsByLoginIdOrEmailOrPhone(command.loginId(),command.email(), command.phone())){
             throw new UserException(UserErrorCode.DUPLICATE_USER);
         }
-
+        Password password = Password.of(command.password());
         User user = User.create(
                 LoginId.of(command.loginId()),
-                Password.of(command.password()),
+                Password.fromEncoded(passwordEncoder.encode(password.value())),
                 command.name(),
                 Email.of(command.email()),
                 Phone.of(command.phone()),
