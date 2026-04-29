@@ -2,6 +2,7 @@ package com.michelet.user.application.service;
 
 import com.michelet.user.application.dto.command.SignUpCommand;
 import com.michelet.user.application.dto.result.UserResult;
+import com.michelet.user.application.port.PasswordEncryptor;
 import com.michelet.user.domain.exception.UserErrorCode;
 import com.michelet.user.domain.exception.UserException;
 import com.michelet.user.domain.model.User;
@@ -11,7 +12,6 @@ import com.michelet.user.domain.vo.LoginId;
 import com.michelet.user.domain.vo.Password;
 import com.michelet.user.domain.vo.Phone;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserCommandService {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncryptor passwordEncryptor;
 
     @Transactional
     public UserResult signUp(SignUpCommand command){
@@ -29,7 +29,7 @@ public class UserCommandService {
         Password password = Password.of(command.password());
         User user = User.create(
                 LoginId.of(command.loginId()),
-                Password.fromEncoded(passwordEncoder.encode(password.value())),
+                Password.fromEncoded(passwordEncryptor.encode(password.value())),
                 command.name(),
                 Email.of(command.email()),
                 Phone.of(command.phone()),

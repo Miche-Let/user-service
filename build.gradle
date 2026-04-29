@@ -32,6 +32,7 @@ dependencies {
     //데이터
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     testImplementation 'com.h2database:h2'
 
     //롬복
@@ -40,7 +41,10 @@ dependencies {
 
     //암호화
     implementation 'org.springframework.security:spring-security-crypto'
-
+    //jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
     //공통
 	implementation 'com.github.Miche-Let:common:dev-SNAPSHOT'
 

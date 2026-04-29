@@ -4,6 +4,7 @@ import com.michelet.user.domain.exception.UserErrorCode;
 import com.michelet.user.domain.exception.UserException;
 import com.michelet.user.domain.model.User;
 import com.michelet.user.domain.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
@@ -26,5 +27,10 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (DataIntegrityViolationException e) {
             throw new UserException(UserErrorCode.DUPLICATE_USER);
         }
+    }
+
+    @Override
+    public Optional<User> findByLoginId(String loginId) {
+        return jpaRepository.findByLoginId(loginId).map(UserMapper::toDomainEntity);
     }
 }
