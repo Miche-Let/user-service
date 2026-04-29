@@ -23,9 +23,9 @@ public class AuthCommandService {
 
     public LoginResult login(LoginCommand command) {
         User user = userRepository.findByLoginId(command.loginId())
-            .orElseThrow(() -> new UserException(UserErrorCode.INVALID_LOGIN_ID));
+            .orElseThrow(() -> new UserException(UserErrorCode.INVALID_CREDENTIALS));
         if (!passwordEncryptor.matches(command.password(), user.getPassword().value())) {
-            throw new UserException(UserErrorCode.INVALID_PASSWORD);
+            throw new UserException(UserErrorCode.INVALID_CREDENTIALS);
         }
 
         String accessToken = tokenProvider.createAccessToken(user.getId().value(), user.getRole().name());
