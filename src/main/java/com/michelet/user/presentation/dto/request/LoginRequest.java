@@ -11,6 +11,6 @@ public record LoginRequest(
     String password
 ) {
     public LoginCommand toCommand(){
-        return new LoginCommand(loginId,password);
+        return new LoginCommand(loginId.trim(),password);
     }
 }
