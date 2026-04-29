@@ -6,6 +6,7 @@ spring:
   cloud:
     discovery:
       enabled: false
+
   datasource:
     url: jdbc:h2:mem:testdb
     driver-class-name: org.h2.Driver
@@ -15,3 +16,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+
+  data:
+      redis:
+          host: localhost
+          port: 6379
+
+jwt:
+    secret: ${JWT_SECRET:test-secret-key-test-secret-key-test-secret-key}
+    access-token-expiration-seconds: ${JWT_ACCESS_TOKEN_EXPIRATION_SECONDS:1800}
+    refresh-token-expiration-seconds: ${JWT_REFRESH_TOKEN_EXPIRATION_SECONDS:1209600}
