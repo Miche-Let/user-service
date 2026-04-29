@@ -3,11 +3,11 @@ package com.michelet.user.domain.vo;
 import com.michelet.user.domain.exception.UserErrorCode;
 import com.michelet.user.domain.exception.UserException;
 
-public record Password(
-        String value
-) {
-    public Password{
-        validate(value);
+public class Password{
+    private final String value;
+
+    private Password(String value){
+        this.value = value;
     }
     public static Password of(String value){
         validateRaw(value);
@@ -17,6 +17,10 @@ public record Password(
         validate(value);
         return new Password(value);
     }
+    public String value(){
+        return value;
+    }
+
     private static void validate(String value){
         if(value== null || value.isBlank())
             throw new UserException(UserErrorCode.INVALID_PASSWORD);
