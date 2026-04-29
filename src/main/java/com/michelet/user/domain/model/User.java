@@ -4,13 +4,16 @@ import com.michelet.user.domain.enums.UserRole;
 import com.michelet.user.domain.enums.UserStatus;
 import com.michelet.user.domain.exception.UserErrorCode;
 import com.michelet.user.domain.exception.UserException;
-import com.michelet.user.domain.vo.*;
+import com.michelet.user.domain.vo.Email;
+import com.michelet.user.domain.vo.LoginId;
+import com.michelet.user.domain.vo.Password;
+import com.michelet.user.domain.vo.Phone;
+import com.michelet.user.domain.vo.UserId;
+import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
@@ -69,7 +72,7 @@ public class User {
         return new User(
                 UserId.of(userId),
                 LoginId.of(loginId),
-                Password.of(password),
+                Password.fromEncoded(password),
                 name,
                 Email.of(email),
                 Phone.of(phone),
