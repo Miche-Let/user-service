@@ -19,9 +19,9 @@ public class JwtTokenProvider implements TokenProvider {
     private final long refreshTokenExpirationSeconds;
 
     public JwtTokenProvider(
-        @Value("&{jwt.secret}") String secret,
-        @Value("&{jwt.access-token-expiration-seconds}") long accessTokenExpirationSeconds,
-        @Value("&{jwt.refresh-token-expiration-seconds}") long refreshTokenExpirationSeconds
+        @Value("${jwt.secret}") String secret,
+        @Value("${jwt.access-token-expiration-seconds}") long accessTokenExpirationSeconds,
+        @Value("${jwt.refresh-token-expiration-seconds}") long refreshTokenExpirationSeconds
     ){
         this.secretkey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.accessTokenExpirationSeconds = accessTokenExpirationSeconds;
