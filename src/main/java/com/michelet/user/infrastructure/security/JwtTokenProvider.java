@@ -37,7 +37,7 @@ public class JwtTokenProvider implements TokenProvider {
             .claim("role",role)
             .issuedAt(Date.from(now))
             .expiration(Date.from(now.plusSeconds(accessTokenExpirationSeconds)))
-            .signWith(secretkey)
+            .signWith(secretkey, Jwts.SIG.HS256)
             .compact();
     }
 
@@ -49,7 +49,7 @@ public class JwtTokenProvider implements TokenProvider {
             .subject(userId.toString())
             .issuedAt(Date.from(now))
             .expiration(Date.from(now.plusSeconds(refreshTokenExpirationSeconds)))
-            .signWith(secretkey)
+            .signWith(secretkey, Jwts.SIG.HS256)
             .compact();
     }
 
