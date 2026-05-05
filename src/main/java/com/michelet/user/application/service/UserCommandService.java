@@ -4,14 +4,10 @@ import com.michelet.user.application.dto.command.SignUpCommand;
 import com.michelet.user.application.dto.result.UserResult;
 import com.michelet.user.application.port.HashGenerator;
 import com.michelet.user.application.port.PasswordEncryptor;
-import com.michelet.user.application.port.PersonalInfoEncryptor;
 import com.michelet.user.application.port.ReservationPort;
 import com.michelet.user.domain.exception.UserErrorCode;
 import com.michelet.user.domain.exception.UserException;
-import com.michelet.user.domain.model.RetainedUserInfo;
 import com.michelet.user.domain.model.User;
-import com.michelet.user.domain.model.WithdrawnUser;
-import com.michelet.user.domain.repository.RetainedInfoRepoistory;
 import com.michelet.user.domain.repository.UserRepository;
 import com.michelet.user.domain.repository.WithdrawnUserRepository;
 import com.michelet.user.domain.vo.Email;
@@ -31,8 +27,7 @@ public class UserCommandService {
     private final PasswordEncryptor passwordEncryptor;
     private final HashGenerator hashGenerator;
     private final WithdrawnUserRepository withdrawnUserRepository;
-    private final PersonalInfoEncryptor personalInfoEncryptor;
-    private final RetainedInfoRepoistory retainedInfoRepoistory;
+    private final UserWithdrawalService withdrawInternal;
     private final ReservationPort reservationPort;
 
     @Transactional
@@ -65,35 +60,6 @@ public class UserCommandService {
         if (reservationPort.hasActiveReservation(userId)) {
             throw new UserException(UserErrorCode.WITHDRAWAL_BLOCKED_BY_ACTIVE_RESERVATION);
         }
-        withdrawInternal(userId);
-    }
-
-    @Transactional
-    protected void withdrawInternal(UUID userId) {
-        User user = userRepository.findById(userId)
-            .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
-
-        String emailHash = hashGenerator.hash(user.getEmail().value());
-        String phoneHash = hashGenerator.hash(user.getPhone().value());
-        LocalDateTime withdrawnAt = LocalDateTime.now();
-
-        WithdrawnUser withdrawnUser = WithdrawnUser.create(
-            user.getId(),
-            emailHash,
-            phoneHash,
-            withdrawnAt
-        );
-        withdrawnUserRepository.save(withdrawnUser);
-
-        RetainedUserInfo retainedUserInfo = RetainedUserInfo.create(
-            user.getId(),
-            personalInfoEncryptor.encrypt(user.getEmail().value()),
-            personalInfoEncryptor.encrypt(user.getPhone().value()),
-            personalInfoEncryptor.encrypt(user.getName()),
-            withdrawnAt
-        );
-        retainedInfoRepoistory.save(retainedUserInfo);
-
-        userRepository.delete(user);
+        withdrawInternal.withdraw(userId);
     }
 }

@@ -50,7 +50,7 @@ public class WithdrawnUserJpaEntity {
             withdrawnUser.getId(),
             withdrawnUser.getUserId().value(),
             withdrawnUser.getEmailHash(),
-            withdrawnUser.getEmailHash(),
+            withdrawnUser.getPhoneHash(),
             withdrawnUser.getWithdrawnAt(),
             withdrawnUser.getRejoinAllowedAt(),
             withdrawnUser.getRetentionUntil()

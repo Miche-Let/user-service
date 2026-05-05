@@ -32,7 +32,7 @@ public class RetainedUserInfo {
             encryptedEmail,
             encryptedPhone,
             withdrawnAt,
-            withdrawnAt.plusDays(365*3)
+            withdrawnAt.plusYears(3)
         );
     }
 

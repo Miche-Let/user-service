@@ -16,8 +16,8 @@ public class RetainedUserInfoMapper {
             entity.getId(),
             UserId.of(entity.getUserId()),
             entity.getEncryptedName(),
-            entity.getEncryptedPhone(),
             entity.getEncryptedEmail(),
+            entity.getEncryptedPhone(),
             entity.getWithdrawnAt(),
             entity.getRetainedUntil()
         );
