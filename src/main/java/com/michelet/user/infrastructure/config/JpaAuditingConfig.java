@@ -1,11 +1,11 @@
 package com.michelet.user.infrastructure.config;
 
+import com.michelet.common.auth.webmvc.context.UserContextHolder;
+import java.util.Optional;
+import java.util.UUID;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @Configuration
 public class JpaAuditingConfig {
@@ -15,6 +15,16 @@ public class JpaAuditingConfig {
 
     @Bean
     public AuditorAware<UUID> auditorAware() {
-        return () -> Optional.of(SYSTEM_AUDITOR_ID);
+        return () -> {
+            var ctx = UserContextHolder.get();
+            if (ctx == null || !ctx.isAuthenticated()) {
+                return Optional.of(SYSTEM_AUDITOR_ID);
+            }
+            try {
+                return Optional.of(UUID.fromString(ctx.userId()));
+            } catch (IllegalArgumentException e) {
+                return Optional.of(SYSTEM_AUDITOR_ID);
+            }
+        };
     }
 }
