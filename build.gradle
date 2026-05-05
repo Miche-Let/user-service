@@ -24,7 +24,9 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -47,8 +49,8 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
     //공통
 	implementation 'com.github.Miche-Let:common:dev-SNAPSHOT'
-
-
+    implementation 'com.github.Miche-Let:common-auth-feign:0.1.2'
+    implementation 'com.github.Miche-Let:common-auth-webmvc:0.1.5'
 }
 
 dependencyManagement {

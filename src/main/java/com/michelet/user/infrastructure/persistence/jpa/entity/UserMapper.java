@@ -1,4 +1,4 @@
-package com.michelet.user.infrastructure.persistence.jpa;
+package com.michelet.user.infrastructure.persistence.jpa.entity;
 
 import com.michelet.user.domain.model.User;
 

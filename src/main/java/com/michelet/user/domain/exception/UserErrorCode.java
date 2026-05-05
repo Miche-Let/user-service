@@ -16,8 +16,10 @@ public enum UserErrorCode implements ErrorCode {
     INVALID_USER_ROLE(HttpStatus.BAD_REQUEST.value(),"UR_E006","유저 권한이 유효하지 않습니다."),
     DUPLICATE_USER(HttpStatus.CONFLICT.value(),"UR_E007","이미 가입된 유저 입니다."),
     INVALID_USER_NAME(HttpStatus.BAD_REQUEST.value(), "UR_E008","유저 이름이 유효하지 않습니다."),
-    INVALID_CREDENTIALS(HttpStatus.BAD_REQUEST.value(), "UR_E009","계정 정보가 유효하지 않습니다.");
-
+    INVALID_CREDENTIALS(HttpStatus.BAD_REQUEST.value(), "UR_E009","계정 정보가 유효하지 않습니다."),
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), "UR_E010","해당 회원을 찾을 수 없습니다."),
+    REJOIN_NOT_ALLOWED(HttpStatus.CONFLICT.value(), "UR_E011", "재가입이 제한된 사용자입니다. 잠시 후 다시 시도해주세요."),
+    WITHDRAWAL_BLOCKED_BY_ACTIVE_RESERVATION(HttpStatus.CONFLICT.value(), "U-409-002", "진행 중인 예약이 있어 탈퇴할 수 없습니다. 예약을 모두 완료하거나 취소한 후 다시 시도해주세요.");
     private final int httpStatus;
     private final String code;
     private final String message;

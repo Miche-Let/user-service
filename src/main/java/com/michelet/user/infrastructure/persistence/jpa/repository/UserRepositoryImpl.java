@@ -1,10 +1,13 @@
-package com.michelet.user.infrastructure.persistence.jpa;
+package com.michelet.user.infrastructure.persistence.jpa.repository;
 
 import com.michelet.user.domain.exception.UserErrorCode;
 import com.michelet.user.domain.exception.UserException;
 import com.michelet.user.domain.model.User;
 import com.michelet.user.domain.repository.UserRepository;
+import com.michelet.user.infrastructure.persistence.jpa.entity.UserJpaEntity;
+import com.michelet.user.infrastructure.persistence.jpa.entity.UserMapper;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
@@ -32,5 +35,15 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findByLoginId(String loginId) {
         return jpaRepository.findByLoginId(loginId).map(UserMapper::toDomainEntity);
+    }
+
+    @Override
+    public Optional<User> findById(UUID id) {
+        return jpaRepository.findById(id).map(UserMapper::toDomainEntity);
+    }
+
+    @Override
+    public void delete(User user) {
+        jpaRepository.delete(UserMapper.toJpaEntity(user));
     }
 }
