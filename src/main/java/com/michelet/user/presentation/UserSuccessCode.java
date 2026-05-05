@@ -10,7 +10,8 @@ import org.springframework.http.HttpStatus;
 public enum UserSuccessCode implements SuccessCode {
     USER_CREATED(HttpStatus.CREATED, "US_S001", "회원가입에 성공하였습니다."),
     LOGIN_SUCCEED(HttpStatus.OK, "US_S002", "로그인에 성공하였습니다."),
-    USER_DELETED(HttpStatus.OK, "US_S003","회원 탈퇴가 완료되었습니다.");
+    USER_DELETED(HttpStatus.OK, "US_S003","회원 탈퇴가 완료되었습니다."),
+    TOKEN_REISSUED(HttpStatus.OK, "US_S004", "토큰 재발급에 성공하였습니다.");
     private final HttpStatus status;
     private final String code;
     private final String message;
