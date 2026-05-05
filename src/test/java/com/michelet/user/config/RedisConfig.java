@@ -3,6 +3,7 @@ package com.michelet.user.config;
 import com.michelet.user.application.port.RefreshTokenStore;
 import java.time.Duration;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -19,7 +20,15 @@ public class RedisConfig {
 
             @Override
             public void save(UUID userId, String refreshToken, Duration ttl) {
-                store.put(userId, refreshToken);
+            }
+
+            @Override
+            public Optional<String> find(UUID userId) {
+                return Optional.empty();
+            }
+
+            @Override
+            public void delete(UUID userId) {
             }
         };
     }
