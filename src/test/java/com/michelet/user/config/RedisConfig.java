@@ -20,15 +20,17 @@ public class RedisConfig {
 
             @Override
             public void save(UUID userId, String refreshToken, Duration ttl) {
+                store.put(userId, refreshToken);
             }
 
             @Override
             public Optional<String> find(UUID userId) {
-                return Optional.empty();
+                return Optional.ofNullable(store.get(userId));
             }
 
             @Override
             public void delete(UUID userId) {
+                store.remove(userId);
             }
         };
     }

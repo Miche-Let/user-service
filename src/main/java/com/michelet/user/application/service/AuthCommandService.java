@@ -50,7 +50,12 @@ public class AuthCommandService {
             throw new UserException(UserErrorCode.INVALID_REFRESH_TOKEN);
         }
 
-        UUID userId = tokenProvider.getUserId(refreshToken);
+        UUID userId;
+        try {
+            userId = tokenProvider.getUserId(refreshToken);
+        } catch (RuntimeException e) {
+            throw new UserException(UserErrorCode.INVALID_REFRESH_TOKEN);
+        }
 
         String savedRefreshToken = refreshTokenStore.find(userId)
             .orElseThrow(() -> new UserException(UserErrorCode.INVALID_REFRESH_TOKEN));
