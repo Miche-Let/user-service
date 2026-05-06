@@ -17,7 +17,7 @@ public class ReservationFeignAdapter implements ReservationPort {
     @Override
     public boolean hasActiveReservation(UUID userId) {
         try {
-            ReservationActiveResponse response = reservationFeignClient.hasActiveReservation(userId);
+            ReservationActiveResponse response = reservationFeignClient.hasActiveReservation(userId).data();
             if (response == null) {
                 throw new UserException(UserErrorCode.RESERVATION_SERVICE_UNAVAILABLE);
             }
