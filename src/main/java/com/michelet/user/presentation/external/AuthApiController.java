@@ -2,6 +2,7 @@ package com.michelet.user.presentation.external;
 
 import com.michelet.common.response.ApiResponse;
 import com.michelet.user.application.dto.result.LoginResult;
+import com.michelet.user.application.dto.result.ReissueResult;
 import com.michelet.user.application.service.AuthCommandService;
 import com.michelet.user.presentation.UserSuccessCode;
 import com.michelet.user.presentation.dto.request.LoginRequest;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +32,16 @@ public class AuthApiController {
         return ResponseEntity.ok()
             .header(HttpHeaders.SET_COOKIE, tokenCookieProvider.create(result.refreshToken()).toString())
             .body(ApiResponse.ok(UserSuccessCode.LOGIN_SUCCEED, new LoginResponse(result.accessToken())));
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity<ApiResponse<LoginResponse>> reissue(
+        @CookieValue(value = "refreshToken", required = false) String refreshToken
+    ) {
+        ReissueResult result = authCommandService.reissue(refreshToken);
+
+        return ResponseEntity.ok()
+            .header(HttpHeaders.SET_COOKIE, tokenCookieProvider.create(result.refreshToken()).toString())
+            .body(ApiResponse.ok(UserSuccessCode.TOKEN_REISSUED, new LoginResponse(result.accessToken())));
     }
 }

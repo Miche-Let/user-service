@@ -2,6 +2,7 @@ package com.michelet.user.application.service;
 
 import com.michelet.user.application.port.HashGenerator;
 import com.michelet.user.application.port.PersonalInfoEncryptor;
+import com.michelet.user.application.port.RefreshTokenStore;
 import com.michelet.user.domain.exception.UserErrorCode;
 import com.michelet.user.domain.exception.UserException;
 import com.michelet.user.domain.model.RetainedUserInfo;
@@ -25,6 +26,7 @@ public class UserWithdrawalService {
     private final RetainedInfoRepoistory retainedInfoRepository;
     private final HashGenerator hashGenerator;
     private final PersonalInfoEncryptor personalInfoEncryptor;
+    private final RefreshTokenStore refreshTokenStore;
 
     @Transactional
     public void withdraw(UUID userId) {
@@ -53,5 +55,6 @@ public class UserWithdrawalService {
         retainedInfoRepository.save(retainedUserInfo);
 
         userRepository.delete(user);
+        refreshTokenStore.delete(userId);
     }
 }
