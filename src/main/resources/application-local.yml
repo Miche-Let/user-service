@@ -22,3 +22,9 @@ spring:
         default_schema: user_service
         format_sql: true
     show-sql: true
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health,info,prometheus
